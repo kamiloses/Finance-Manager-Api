@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "budget_limits")
 @Builder
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BudgetLimit {
