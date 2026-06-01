@@ -28,8 +28,6 @@ import static org.mockito.Mockito.when;
 class AccountServiceImplTest {
 
 
-
-
     @Mock
     private AccountRepository accountRepository;
 
