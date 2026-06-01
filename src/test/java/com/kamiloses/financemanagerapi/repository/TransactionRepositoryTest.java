@@ -108,6 +108,6 @@ class TransactionRepositoryTest {
                 );
 
         assertTrue(result.isPresent());
-        assertEquals(new BigDecimal("100"), result.get());
+        assertEquals(new BigDecimal("100.00"), result.get());
     }
 }
