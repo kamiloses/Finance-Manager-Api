@@ -1,7 +1,8 @@
 package com.kamiloses.financemanagerapi.services;
 
-import dto.AccountRequestDTO;
-import dto.AccountResponseDTO;
+
+import com.kamiloses.financemanagerapi.dto.AccountRequestDTO;
+import com.kamiloses.financemanagerapi.dto.AccountResponseDTO;
 
 import java.util.List;
 
