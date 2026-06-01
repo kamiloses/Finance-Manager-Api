@@ -10,7 +10,7 @@ import com.kamiloses.financemanagerapi.exceptions.AccountNotFoundException;
 import com.kamiloses.financemanagerapi.repository.AccountRepository;
 import com.kamiloses.financemanagerapi.repository.TransactionRepository;
 import com.kamiloses.financemanagerapi.services.AccountService;
-import com.kamiloses.mapper.AccountMapper;
+import com.kamiloses.financemanagerapi.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

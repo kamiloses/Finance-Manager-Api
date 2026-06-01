@@ -1,4 +1,4 @@
-package com.kamiloses.mapper;
+package com.kamiloses.financemanagerapi.mapper;
 
 import com.kamiloses.financemanagerapi.dto.TransactionResponseDTO;
 import com.kamiloses.financemanagerapi.entity.Transaction;

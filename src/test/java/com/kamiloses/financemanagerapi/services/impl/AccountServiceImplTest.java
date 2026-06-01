@@ -8,7 +8,7 @@ import com.kamiloses.financemanagerapi.exceptions.AccountHasTransactionsExceptio
 import com.kamiloses.financemanagerapi.exceptions.AccountNotFoundException;
 import com.kamiloses.financemanagerapi.repository.AccountRepository;
 import com.kamiloses.financemanagerapi.repository.TransactionRepository;
-import com.kamiloses.mapper.AccountMapper;
+import com.kamiloses.financemanagerapi.mapper.AccountMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
