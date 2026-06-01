@@ -1,13 +1,13 @@
 package com.kamiloses.financemanagerapi.services.impl;
 
-import dto.TransactionRequestDTO;
-import entities.BudgetLimit;
-import entities.TransactionType;
+import com.kamiloses.financemanagerapi.dto.TransactionRequestDTO;
+import com.kamiloses.financemanagerapi.entity.BudgetLimit;
+import com.kamiloses.financemanagerapi.entity.TransactionType;
+import com.kamiloses.financemanagerapi.repository.BudgetLimitRepository;
+import com.kamiloses.financemanagerapi.repository.TransactionRepository;
+import com.kamiloses.financemanagerapi.services.BudgetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import repositories.BudgetLimitRepository;
-import repositories.TransactionRepository;
-import services.BudgetService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

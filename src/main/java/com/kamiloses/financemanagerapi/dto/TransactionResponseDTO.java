@@ -1,6 +1,6 @@
 package com.kamiloses.financemanagerapi.dto;
 
-import entities.TransactionType;
+import com.kamiloses.financemanagerapi.entity.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

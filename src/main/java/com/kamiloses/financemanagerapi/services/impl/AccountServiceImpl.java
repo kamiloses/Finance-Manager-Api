@@ -1,17 +1,18 @@
 package com.kamiloses.financemanagerapi.services.impl;
 
-import dto.AccountRequestDTO;
-import dto.AccountResponseDTO;
-import entities.Account;
-import ex.AccountAlreadyExistsException;
-import ex.AccountHasTransactionsException;
-import ex.AccountNotFoundException;
+
+import com.kamiloses.financemanagerapi.dto.AccountRequestDTO;
+import com.kamiloses.financemanagerapi.dto.AccountResponseDTO;
+import com.kamiloses.financemanagerapi.entity.Account;
+import com.kamiloses.financemanagerapi.exceptions.AccountAlreadyExistsException;
+import com.kamiloses.financemanagerapi.exceptions.AccountHasTransactionsException;
+import com.kamiloses.financemanagerapi.exceptions.AccountNotFoundException;
+import com.kamiloses.financemanagerapi.repository.AccountRepository;
+import com.kamiloses.financemanagerapi.repository.TransactionRepository;
+import com.kamiloses.financemanagerapi.services.AccountService;
+import com.kamiloses.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
-import mapper.AccountMapper;
 import org.springframework.stereotype.Service;
-import repositories.AccountRepository;
-import repositories.TransactionRepository;
-import services.AccountService;
 
 import java.util.List;
 
