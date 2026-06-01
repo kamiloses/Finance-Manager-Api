@@ -41,12 +41,7 @@ class BudgetServiceImplTest {
         request.setCategory("FOOD");
         request.setAmount(new BigDecimal("100"));
 
-        when(transactionRepository.sumExpenses(
-                anyLong(),
-                eq("FOOD"),
-                eq(TransactionType.EXPENSE),
-                any(),
-                any()
+        when(transactionRepository.sumExpenses(anyLong(), eq("FOOD"), eq(TransactionType.EXPENSE), any(), any()
         )).thenReturn(Optional.of(new BigDecimal("200")));
 
         BudgetLimit limit = new BudgetLimit();
