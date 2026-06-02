@@ -16,6 +16,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,6 +60,12 @@ class TransactionControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.amount").value(50.00));
+
+
+        Account updated = accountRepository.findById(account.getId()).orElseThrow();
+
+        assertEquals(new BigDecimal("150.00"), updated.getBalance());
+
     }
 
     @Test
@@ -82,15 +89,16 @@ class TransactionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.amount").value(20.00))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
-        Long transactionId = transactionRepository.findAll()
-                .get(0)
-                .getId();
+        Long transactionId = objectMapper.readTree(response)
+                .get("id")
+                .asLong();
 
-        mockMvc.perform(delete("/accounts/transactions/" + transactionId))
+        mockMvc.perform(delete("/accounts/" + account.getId() + "/transactions/" + transactionId))
                 .andExpect(status().isNoContent());
 
         assertTrue(transactionRepository.findById(transactionId).isEmpty());

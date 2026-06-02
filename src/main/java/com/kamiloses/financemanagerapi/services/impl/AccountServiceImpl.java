@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
 
 
-    @Override //Celowo paginacji nie dałem
+    @Override //Celowo paginacji nie dałem todo
     public List<AccountResponseDTO> getAllAccounts() {
         return accountRepository.findAll()
                 .stream()

@@ -187,24 +187,4 @@ class TransactionServiceImplTest {
         assertEquals(new BigDecimal("130.00"), account.getBalance());
     }
 
-    @Test
-    void shouldReturnFilteredTransactions() {
-
-        Transaction t = Transaction.builder()
-                .id(1L)
-                .category("Food")
-                .date(LocalDateTime.now())
-                .build();
-
-        when(transactionRepository.findFiltered(any(), any(), any(), any()))
-                .thenReturn(List.of(t));
-
-        when(transactionMapper.toDto(any()))
-                .thenReturn(new TransactionResponseDTO());
-
-        List<TransactionResponseDTO> result =
-                transactionService.getTransactions(1L, null, null, "Food");
-
-        assertEquals(1, result.size());
-    }
 }

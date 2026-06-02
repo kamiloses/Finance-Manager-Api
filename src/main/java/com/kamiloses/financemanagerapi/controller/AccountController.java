@@ -3,6 +3,7 @@ package com.kamiloses.financemanagerapi.controller;
 import com.kamiloses.financemanagerapi.dto.AccountRequestDTO;
 import com.kamiloses.financemanagerapi.dto.AccountResponseDTO;
 import com.kamiloses.financemanagerapi.services.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountResponseDTO> createAccount(
-            @RequestBody AccountRequestDTO request) {
+    public ResponseEntity<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO request) {
 
         AccountResponseDTO created = accountService.createAccount(request);
 
@@ -34,8 +34,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountResponseDTO> getAccountById(
-            @PathVariable Long id) {
+    public ResponseEntity<AccountResponseDTO> getAccountById(@PathVariable Long id) {
 
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
