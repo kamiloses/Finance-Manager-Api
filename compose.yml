@@ -1,21 +1,16 @@
 services:
   postgres:
     image: postgres:16
-    container_name: finance-postgres
+    container_name: postgres
     environment:
       POSTGRES_DB: finance_db
       POSTGRES_USER: finance_user
       POSTGRES_PASSWORD: abc
     ports:
       - "5432:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
 
-  finance-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: finance-api
+  api:
+    build: .
     ports:
       - "8080:8080"
     depends_on:
@@ -24,8 +19,3 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/finance_db
       SPRING_DATASOURCE_USERNAME: finance_user
       SPRING_DATASOURCE_PASSWORD: abc
-    stdin_open: true
-    tty: true
-
-volumes:
-  pg_data:
