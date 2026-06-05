@@ -21,7 +21,7 @@ public class Account {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal balance = BigDecimal.ZERO;
 
 //    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

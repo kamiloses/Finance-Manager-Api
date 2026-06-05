@@ -20,9 +20,9 @@ public class BudgetLimit {
     @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal limitAmount;
 
 
-    //Zakładam że limit na kategorie jest miesięczny
+
 }

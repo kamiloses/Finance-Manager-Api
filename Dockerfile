@@ -1,0 +1,12 @@
+services:
+  finance-api:
+    image: finance-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true

@@ -3,6 +3,7 @@ package com.kamiloses.financemanagerapi.controller;
 import com.kamiloses.financemanagerapi.dto.AccountRequestDTO;
 import com.kamiloses.financemanagerapi.entity.Account;
 import com.kamiloses.financemanagerapi.repository.AccountRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,4 +66,22 @@ class AccountControllerTest {
         mockMvc.perform(delete("/accounts/" + saved.getId()))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    @Transactional
+    void shouldReturnConflictWhenCreatingDuplicateAccount() throws Exception {
+        AccountRequestDTO request = new AccountRequestDTO();
+        request.setName("Duplicate Account");
+
+        mockMvc.perform(post("/accounts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post("/accounts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict());
+    }
+
 }

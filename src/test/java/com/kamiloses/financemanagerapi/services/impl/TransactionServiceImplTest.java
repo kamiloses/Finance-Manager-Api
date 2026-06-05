@@ -55,7 +55,7 @@ class TransactionServiceImplTest {
                 .balance(new BigDecimal("100.00"))
                 .build();
 
-        TransactionRequestDTO request = new TransactionRequestDTO(
+        TransactionRequestDTO transactionRequest = new TransactionRequestDTO(
                 new BigDecimal("50.00"),
                 TransactionType.INCOME,
                 "Salary",
@@ -64,10 +64,10 @@ class TransactionServiceImplTest {
 
         Transaction transaction = Transaction.builder()
                 .account(account)
-                .amount(request.getAmount())
-                .type(request.getType())
-                .category(request.getCategory())
-                .description(request.getDescription())
+                .amount(transactionRequest.getAmount())
+                .type(transactionRequest.getType())
+                .category(transactionRequest.getCategory())
+                .description(transactionRequest.getDescription())
                 .date(LocalDateTime.now())
                 .build();
 
@@ -78,7 +78,7 @@ class TransactionServiceImplTest {
         when(transactionMapper.toDto(any())).thenReturn(responseDTO);
 
         TransactionResponseDTO result =
-                transactionService.createTransaction(accountId, request);
+                transactionService.createTransaction(accountId, transactionRequest);
 
         assertNotNull(result);
         assertEquals(new BigDecimal("150.00"), account.getBalance());
@@ -118,9 +118,11 @@ class TransactionServiceImplTest {
         when(transactionMapper.toDto(any())).thenReturn(new TransactionResponseDTO());
         when(budgetService.checkBudgetLimit(anyLong(), any())).thenReturn("Budget exceeded");
 
-        transactionService.createTransaction(accountId, request);
+        TransactionResponseDTO transactionResponseDTO = transactionService.createTransaction(accountId, request);
 
         assertEquals(new BigDecimal("70.00"), account.getBalance());
+        assertNotNull(transactionResponseDTO.getWarning());
+
     }
 
     @Test

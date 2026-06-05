@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @DataJpaTest
 class TransactionRepositoryTest {
-//TODO
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -47,7 +46,7 @@ class TransactionRepositoryTest {
     }
 
     @Test
-    void shouldFilterByCategory() {
+    void shouldReturnTransactionsByAccountId() {
 
         Account account = accountRepository.save(Account.builder()
                 .name("A1")
@@ -63,12 +62,7 @@ class TransactionRepositoryTest {
                 .build());
 
         List<Transaction> result =
-                transactionRepository.findFiltered(
-                        account.getId(),
-                        null,
-                        null,
-                        "Food"
-                );
+                transactionRepository.findByAccountId(account.getId());
 
         assertEquals(1, result.size());
     }

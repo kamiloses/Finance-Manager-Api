@@ -103,4 +103,48 @@ class TransactionControllerTest {
 
         assertTrue(transactionRepository.findById(transactionId).isEmpty());
     }
+
+
+
+
+    @Test
+    void shouldFilterTransactionsByCategory() throws Exception {
+        Account account = accountRepository.save(
+                Account.builder()
+                        .name("Filter Acc")
+                        .balance(new BigDecimal("500.00"))
+                        .build()
+        );
+
+        TransactionRequestDTO food = new TransactionRequestDTO(
+                new BigDecimal("100.00"),
+                TransactionType.EXPENSE,
+                "Food",
+                "Lunch"
+        );
+
+        TransactionRequestDTO transport = new TransactionRequestDTO(
+                new BigDecimal("30.00"),
+                TransactionType.EXPENSE,
+                "Transport",
+                "Bus"
+        );
+
+        mockMvc.perform(post("/accounts/" + account.getId() + "/transactions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(food)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post("/accounts/" + account.getId() + "/transactions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(transport)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/accounts/" + account.getId() + "/transactions")
+                        .param("category", "Food"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].category").value("Food"));
+    }
+
 }

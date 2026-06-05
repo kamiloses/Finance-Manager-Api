@@ -32,11 +32,21 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionResponseDTO> getTransactions(Long accountId, LocalDateTime from, LocalDateTime to, String category)
      {
+         if (!accountRepository.existsById(accountId)) {
+             throw new AccountNotFoundException("Account not found: " + accountId);
+         }
 
-        return transactionRepository.findFiltered(accountId,from,to,category)
-                .stream()
-                .map(transactionMapper::toDto)
-                .toList();
+
+
+         return transactionRepository.findAllByAccountId(accountId)   // ze względu na problemy z zapytaniem JQuery zostałem przy tradycyjnym filtrowaniu w aplikacji
+                 .stream()
+                 .filter(t -> from == null || !t.getDate().isBefore(from))
+                 .filter(t -> to == null || !t.getDate().isAfter(to))
+                 .filter(t -> category == null || category.isBlank()
+                         || t.getCategory().equalsIgnoreCase(category))
+                 .map(transactionMapper::toDto)
+                 .toList();
+
     }
 
     @Override

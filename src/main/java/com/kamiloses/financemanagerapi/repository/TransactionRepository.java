@@ -15,44 +15,38 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     boolean existsByAccountId(Long id);
 
-
     List<Transaction> findByAccountId(Long accountId);
 
-
-    @Query("""
-                SELECT t FROM Transaction t
-                WHERE t.account.id = :accountId
-                AND (:from IS NULL OR t.date >= :from)
-                AND (:to IS NULL OR t.date <= :to)
-                AND (:category IS NULL OR LOWER(t.category) = LOWER(:category))
-                ORDER BY t.date DESC
-            """)
-    List<Transaction> findFiltered(
-            @Param("accountId") Long accountId,
-            @Param("from") LocalDateTime from,
-            @Param("to") LocalDateTime to,
-            @Param("category") String category
-    );
+    @Query("SELECT t FROM Transaction t WHERE t.account.id = :accountId ORDER BY t.date DESC")
+    List<Transaction> findAllByAccountId(@Param("accountId") Long accountId);
 
 
     @Query("""
-                SELECT SUM(t.amount)
-                FROM Transaction t
+                SELECT SUM(t.amount) FROM Transaction t
                 WHERE t.account.id = :accountId
-                  AND t.category = :category
-                  AND t.type = :type
+                  AND t.category = :category AND t.type = :type
                   AND t.date BETWEEN :from AND :to
             """)
     Optional<BigDecimal> sumExpenses(
-            Long accountId,
-            String category,
-            TransactionType type,
-            LocalDateTime from,
-            LocalDateTime to
-    );
+            @Param("accountId") Long accountId, @Param("category") String category, @Param("type") TransactionType type,
+            @Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
+
+    @Query("""
+                SELECT COALESCE(SUM(t.amount), 0)
+                FROM Transaction t
+                WHERE t.account.id = :accountId
+                  AND t.type = :type
+            """)
+    BigDecimal sumByType(@Param("accountId") Long accountId, @Param("type") TransactionType type);
+
+
+    @Query("""
+                SELECT t.category, SUM(t.amount)
+                FROM Transaction t
+                WHERE t.account.id = :accountId
+                  AND t.type = 'EXPENSE'
+                GROUP BY t.category
+            """)
+    List<Object[]> sumByCategory(@Param("accountId") Long accountId);
 }
-
-
-
-
